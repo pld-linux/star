@@ -1,0 +1,11 @@
+--- star-1.5/lib/strtod.c.orig	Sat Apr 20 16:06:19 2002
++++ star-1.5/lib/strtod.c	Fri Feb 27 16:34:35 2004
+@@ -604,7 +604,7 @@
+ 	if (!(x & 1)) {
+ 		k++;
+ 		x >>= 1;
+-		if (!x & 1)
++		if (!(x & 1))
+ 			return 32;
+ 		}
+ 	*y = x;
