@@ -1,17 +1,14 @@
 #
 # TODO: use proper CC and CFLAGS
 
-%define ver   1.4
-%define alpha  a26
-
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
-Version:	%{ver}%{alpha}
+Version:	1.4
 Release:	1
 License:	GPL
 Group:		Applications/File
-Source0:	ftp://ftp.fokus.gmd.de/pub/unix/star/alpha/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.fokus.gmd.de/pub/unix/star//%{name}-%{version}.tar.bz2
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/star.html
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -55,10 +52,10 @@ zaimplementowane wszystkie rozszerzenia Sun/GNU/Schily/BSD i pozwala
 na dostêp klientem rmt z dowolnego systemu operacyjnego.
 
 %prep
-%setup -q -n %{name}-%{ver}
+%setup -q 
 
 %build
-%{__make}
+%{__make} 
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -75,5 +72,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/star
 %attr(755,root,root) %{_bindir}/smt
 %attr(755,root,root) %{_sbindir}/rmt
+%doc README.linux ChangeLog TODO
 %{_mandir}/man1/star.1*
 %{_mandir}/man1/rmt.1*
