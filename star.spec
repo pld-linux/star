@@ -1,11 +1,11 @@
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
-Version:	1.4.2
+Version:	1.4.3
 Release:	1
 License:	GPL
 Group:		Applications/File
-Source0:	ftp://ftp.fokus.gmd.de/pub/unix/star//%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.berlios.de/pub/star/%{name}-%{version}.tar.bz2
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/star.html
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
