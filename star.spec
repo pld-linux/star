@@ -74,7 +74,7 @@ ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 
 %build
 cd conf
-cp -f /usr/share/automake/config.* conf
+cp -f /usr/share/automake/config.* .
 %{__autoconf}
 cd ..
 %{__make} \
