@@ -1,0 +1,10 @@
+--- star-1.5/star/star.c~	2004-09-27 17:01:09.069013856 +0200
++++ star-1.5/star/star.c	2004-09-27 17:02:22.021923328 +0200
+@@ -24,6 +24,7 @@
+ 
+ #define	STAR_MAIN
+ 
++#include <malloc.h>
+ #include <mconfig.h>
+ #include <stdio.h>
+ #include <stdxlib.h>
