@@ -163,3 +163,60 @@
  LIB_ACL= @lib_acl@
  LIB_ATTR = @lib_attr@
 +LIB_SELINUX = @lib_selinux@
+--- star-1.5/star/cpio.mk.orig	Fri Nov  7 23:29:38 2003
++++ star-1.5/star/cpio.mk	Mon Mar  1 13:56:51 2004
+@@ -16,6 +16,7 @@
+ CPPOPTS +=	-DUSE_LARGEFILES
+ CPPOPTS +=	-DUSE_ACL
+ CPPOPTS +=	-DUSE_XATTR
++CPPOPTS +=	-DWITH_SELINUX
+ CPPOPTS +=	-DUSE_FFLAGS
+ CFILES=		cpio.c header.c cpiohdr.c xheader.c xattr.c \
+ 		list.c extract.c create.c append.c diff.c restore.c \
+@@ -33,7 +34,7 @@
+ 		checkerr.h dumpdate.h bitstring.h
+ #LIBS=		-lunos
+ #LIBS=		-lschily -lc /usr/local/lib/gcc-gnulib
+-LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET)
++LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET)
+ XMK_FILE=	spaxman.mk
+ 
+ ###########################################################################
+--- star-1.5/star/gnutar.mk.orig	Fri Nov  7 23:29:38 2003
++++ star-1.5/star/gnutar.mk	Mon Mar  1 13:56:43 2004
+@@ -16,6 +16,7 @@
+ CPPOPTS +=	-DUSE_LARGEFILES
+ CPPOPTS +=	-DUSE_ACL
+ CPPOPTS +=	-DUSE_XATTR
++CPPOPTS +=	-DWITH_SELINUX
+ CPPOPTS +=	-DUSE_FFLAGS
+ CFILES=		gnutar.c header.c cpiohdr.c xheader.c xattr.c \
+ 		list.c extract.c create.c append.c diff.c restore.c \
+@@ -33,7 +34,7 @@
+ 		checkerr.h dumpdate.h bitstring.h
+ #LIBS=		-lunos
+ #LIBS=		-lschily -lc /usr/local/lib/gcc-gnulib
+-LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET)
++LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET)
+ XMK_FILE=	spaxman.mk
+ 
+ ###########################################################################
+--- star-1.5/star/suntar.mk.orig	Fri Nov  7 23:29:38 2003
++++ star-1.5/star/suntar.mk	Mon Mar  1 13:56:33 2004
+@@ -16,6 +16,7 @@
+ CPPOPTS +=	-DUSE_LARGEFILES
+ CPPOPTS +=	-DUSE_ACL
+ CPPOPTS +=	-DUSE_XATTR
++CPPOPTS +=	-DWITH_SELINUX
+ CPPOPTS +=	-DUSE_FFLAGS
+ CFILES=		suntar.c header.c cpiohdr.c xheader.c xattr.c \
+ 		list.c extract.c create.c append.c diff.c restore.c \
+@@ -33,7 +34,7 @@
+ 		checkerr.h dumpdate.h bitstring.h
+ #LIBS=		-lunos
+ #LIBS=		-lschily -lc /usr/local/lib/gcc-gnulib
+-LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET)
++LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET)
+ XMK_FILE=	spaxman.mk
+ 
+ ###########################################################################
