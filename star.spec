@@ -2,7 +2,7 @@
 # TODO: use proper CC and CFLAGS
 
 %define ver   1.4
-%define alpha  a24
+%define alpha  a25
 
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
@@ -65,7 +65,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	INS_BASE=$RPM_BUILD_ROOT%{_prefix} \
-	MANDIR=%{_mandir}
+	MANDIR=/share/man
 
 %clean
 rm -rf $RPM_BUILD_ROOT
