@@ -7,7 +7,7 @@ Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
 Version:	1.5
 %define	bver	a58
-Release:	0.%{bver}.1
+Release:	0.%{bver}.2
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://ftp.berlios.de/pub/star/alpha/%{name}-%{version}%{bver}.tar.bz2
