@@ -4,7 +4,7 @@
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
-Version:	1.4
+Version:	1.4.1
 Release:	1
 License:	GPL
 Group:		Applications/File
