@@ -51,7 +51,7 @@ zaimplementowane wszystkie rozszerzenia Sun/GNU/Schily/BSD i pozwala
 na dostêp klientem rmt z dowolnego systemu operacyjnego.
 
 %prep
-%setup -q 
+%setup -q
 
 %build
 %{__make} \
