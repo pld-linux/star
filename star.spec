@@ -1,13 +1,14 @@
+%bcond_without	selinux	# disable selinux
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
 Version:	1.5
-%define	bver	a47
+%define	bver	a48
 Release:	0.%{bver}.1
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://ftp.berlios.de/pub/star/alpha/%{name}-%{version}%{bver}.tar.bz2
-# Source0-md5:	05f305d21ca7f83a0d1c90285c9062bc
+# Source0-md5:	c682ba76775d2bd47b964f40a621e8c3
 # based on http://www.nsa.gov/selinux/patches/star-selinux.patch.gz
 Patch0:		%{name}-selinux.patch
 Patch1:		%{name}-no-kernel-headers.patch
@@ -17,7 +18,7 @@ URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/privat
 BuildRequires:	acl-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libselinux-devel
+%{?with_selinux:BuildRequires:	libselinux-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -61,16 +62,13 @@ na dostêp klientem rmt z dowolnego systemu operacyjnego.
 
 %prep
 %setup -q
-%patch0 -p1
+%{?with_selinux:%patch0 -p1}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
 # new ac doesn't like comments in the same line as #undef
 %{__perl} -pi -e 's@/\*.*\*/@@g' conf/xconfig.h.in
-
-ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
-ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 
 %build
 cd conf
