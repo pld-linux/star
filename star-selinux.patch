@@ -1,0 +1,165 @@
+--- star-1.5/star/star.c.selinux	2003-09-10 10:26:35.000000000 -0400
++++ star-1.5/star/star.c	2003-09-16 15:53:48.000000000 -0400
+@@ -41,6 +41,10 @@
+ #include "fifo.h"
+ #include "dumpdate.h"
+ 
++#ifdef WITH_SELINUX
++int selinux_enabled=0;
++#endif
++
+ EXPORT	int	main		__PR((int ac, char **av));
+ EXPORT	void	copy_create	__PR((int ac, char *const *av));
+ LOCAL	int	getfilecount	__PR((int ac, char *const *av, const char *fmt));
+@@ -294,6 +298,9 @@
+ #endif
+ 			comerr("Panic cannot set back effective uid.\n");
+ 	}
++#ifdef WITH_SELINUX
++	selinux_enabled=is_selinux_enabled()>0;
++#endif
+ 	/*
+ 	 * WARNING: We now are no more able to open a new remote connection
+ 	 * unless we have been called by root.
+--- star-1.5/star/xattr.c.selinux	2003-09-13 12:48:23.000000000 -0400
++++ star-1.5/star/xattr.c	2003-09-16 15:55:25.000000000 -0400
+@@ -158,6 +158,27 @@
+ #endif  /* USE_XATTR */
+ }
+ 
++#ifdef WITH_SELINUX
++EXPORT BOOL
++setselinux(info)
++	register FINFO *info;
++{
++#if defined(USE_XATTR) && defined(HAVE_SETXATTR) && defined(WITH_SELINUX)
++	if (info->f_xattr) {
++	        star_xattr_t	*xap;
++		for (xap = info->f_xattr; xap->name != NULL; xap++) {
++		  if (strcmp(xap->name, "security.selinux") == 0) {
++		    if (setfscreatecon(xap->value)) {
++		      return FALSE;
++		    }
++		  }
++		}
++	}
++#endif  /* USE_XATTR && WITH_SELINUX */
++	return TRUE;
++}
++#endif
++
+ EXPORT BOOL
+ set_xattr(info)
+ 	register FINFO	*info;
+@@ -169,6 +190,10 @@
+ 		return (TRUE);
+ 
+ 	for (xap = info->f_xattr; xap->name != NULL; xap++) {
++#ifdef WITH_SELINUX
++	        if (selinux_enabled && (strcmp(xap->name, "security.selinux") == 0)) 
++		  continue;
++#endif
+ 		if (setxattr(info->f_name, xap->name, xap->value,
+ 		    xap->value_len, 0) != 0) {
+ 			if (!errhidden(E_SETXATTR, info->f_name)) {
+--- star-1.5/star/Makefile.orig	Fri Nov  7 23:29:38 2003
++++ star-1.5/star/Makefile	Fri Feb 27 15:57:21 2004
+@@ -16,6 +16,7 @@
+ CPPOPTS +=	-DUSE_LARGEFILES
+ CPPOPTS +=	-DUSE_ACL
+ CPPOPTS +=	-DUSE_XATTR
++CPPOPTS +=	-DWITH_SELINUX
+ CPPOPTS +=	-DUSE_FFLAGS
+ CFILES=		star.c header.c cpiohdr.c xheader.c xattr.c \
+ 		list.c extract.c create.c append.c diff.c restore.c \
+@@ -33,7 +34,7 @@
+ 		checkerr.h dumpdate.h bitstring.h
+ #LIBS=		-lunos
+ #LIBS=		-lschily -lc /usr/local/lib/gcc-gnulib
+-LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET)
++LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET)
+ XMK_FILE=	Makefile.man starformatman.mk
+ 
+ ###########################################################################
+--- star-1.5/star/starsubs.h.selinux	2003-09-10 11:24:04.000000000 -0400
++++ star-1.5/star/starsubs.h	2003-09-16 15:53:48.000000000 -0400
+@@ -227,6 +227,11 @@
+ extern	BOOL	get_xattr	__PR((register FINFO *info));
+ extern	BOOL	set_xattr	__PR((register FINFO *info));
+ extern	void	free_xattr	__PR((star_xattr_t **xattr));
++#ifdef WITH_SELINUX
++#include <selinux/selinux.h>
++extern	BOOL	setselinux __PR((register FINFO *info));
++extern int selinux_enabled;
++#endif
+ #endif
+ 
+ /*
+--- star-1.5/star/extract.c.selinux	2003-09-16 15:53:48.000000000 -0400
++++ star-1.5/star/extract.c	2003-09-16 15:53:48.000000000 -0400
+@@ -134,6 +134,15 @@
+ 		if (prblockno)
+ 			(void) tblocks();		/* set curblockno */
+ 
++#ifdef WITH_SELINUX
++		if (!to_stdout && selinux_enabled) {
++		  if (setselinux(&finfo) == FALSE) {
++		    errmsgno(EX_BAD,
++			     "Can not setup security context for '%s'. Not created.\n",
++			     finfo.f_name);
++		  }
++		}
++#endif
+ 		if (is_volhdr(&finfo)) {
+ 			if (!get_volhdr(&finfo, vhname)) {
+ 				excomerrno(EX_BAD,
+--- star-1.5/star/pax.mk.selinux	2003-09-13 08:51:39.000000000 -0400
++++ star-1.5/star/pax.mk	2003-09-16 16:02:34.000000000 -0400
+@@ -15,6 +15,7 @@
+ CPPOPTS +=	-DUSE_LARGEFILES
+ CPPOPTS +=	-DUSE_ACL
+ CPPOPTS +=	-DUSE_XATTR
++CPPOPTS +=	-DWITH_SELINUX
+ CPPOPTS +=	-DUSE_FFLAGS
+ CPPOPTS +=	-DPAX
+ CFILES=		pax.c header.c cpiohdr.c xheader.c xattr.c \
+@@ -33,7 +34,7 @@
+ 		checkerr.h dumpdate.h
+ #LIBS=		-lunos
+ #LIBS=		-lschily -lc /usr/local/lib/gcc-gnulib
+-LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET)
++LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET)
+ XMK_FILE=	spaxman.mk
+ 
+ ###########################################################################
+--- star-1.5/conf/configure.in.selinux	2003-09-13 12:50:23.000000000 -0400
++++ star-1.5/conf/configure.in	2003-09-16 15:53:48.000000000 -0400
+@@ -293,11 +293,21 @@
+   LIBS="$ac_save_LIBS"
+ fi
+ 
++AC_CHECK_HEADERS(selinux/selinux.h)
++if test "$ac_cv_header_selinux_selinux_h" = yes; then
++  AC_CHECKING(for SELinux support)
++  AC_CHECK_LIB(selinux, is_selinux_enabled, lib_selinux="-lselinux -lattr")
++  ac_save_LIBS="$LIBS"
++  LIBS="$LIBS $lib_selinux"
++  AC_CHECK_FUNCS(is_selinux_enabled)
++fi
++
+ AC_SUBST(largefile_cc_opt)
+ 
+ AC_SUBST(lib_crypt)
+ AC_SUBST(scsi_lib)
+ AC_SUBST(lib_acl)
+ AC_SUBST(lib_attr)
++AC_SUBST(lib_selinux)
+ 
+ AC_OUTPUT(rules.cnf)
+--- star-1.5/conf/rules.cnf.in.selinux	2003-09-13 09:06:41.000000000 -0400
++++ star-1.5/conf/rules.cnf.in	2003-09-16 15:53:48.000000000 -0400
+@@ -8,3 +8,4 @@
+ LIB_CRYPT= @lib_crypt@
+ LIB_ACL= @lib_acl@
+ LIB_ATTR = @lib_attr@
++LIB_SELINUX = @lib_selinux@
