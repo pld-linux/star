@@ -16,6 +16,7 @@ Patch3:		%{name}-unamep.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/star.html
 BuildRequires:	acl-devel
 BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	libselinux-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -68,8 +69,12 @@ na dostêp klientem rmt z dowolnego systemu operacyjnego.
 # new ac doesn't like comments in the same line as #undef
 %{__perl} -pi -e 's@/\*.*\*/@@g' conf/xconfig.h.in
 
+ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
+ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
+
 %build
 cd conf
+cp -f /usr/share/automake/config.* conf
 %{__autoconf}
 cd ..
 %{__make} \
