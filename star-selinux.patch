@@ -37,9 +37,9 @@
  #LIBS=		-lschily -lc /usr/local/lib/gcc-gnulib
 -LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET)
 +LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET)
- XMK_FILE=	Makefile.man starformatman.mk
+ XMK_FILE=	Makefile.man starformatman.mk scpioman.mk gnutarman.mk \
+ 		spaxman.mk suntarman.mk
  
- ###########################################################################
 --- star-1.5/star/starsubs.h.selinux	2003-09-10 11:24:04.000000000 -0400
 +++ star-1.5/star/starsubs.h	2003-09-16 15:53:48.000000000 -0400
 @@ -227,6 +227,11 @@
