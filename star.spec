@@ -1,15 +1,14 @@
-#
-# TODO: use proper CC and CFLAGS
-
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
-Version:	1.4.1
+Version:	1.4.3
 Release:	1
 License:	GPL
 Group:		Applications/File
-Source0:	ftp://ftp.fokus.gmd.de/pub/unix/star//%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.berlios.de/pub/star/%{name}-%{version}.tar.bz2
+# Source0-md5:	e0760d494c1962d9d784d0c4378d40df
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/star.html
+BuildRequires:	acl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -52,10 +51,13 @@ zaimplementowane wszystkie rozszerzenia Sun/GNU/Schily/BSD i pozwala
 na dostêp klientem rmt z dowolnego systemu operacyjnego.
 
 %prep
-%setup -q 
+%setup -q
 
 %build
-%{__make} 
+%{__make} \
+	COPTOPT="%{rpmcflags}" \
+	CC='@echo " ==> COMPILING \"$@\""; %{__cc}' \
+	LDCC='@echo " ==> LINKING \"$@\""; %{__cc}'
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -70,6 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/star
+%attr(755,root,root) %{_bindir}/ustar
 %attr(755,root,root) %{_bindir}/smt
 %attr(755,root,root) %{_sbindir}/rmt
 %doc README.linux Changelog TODO
