@@ -12,6 +12,7 @@ Source0:	ftp://ftp.berlios.de/pub/star/alpha/%{name}-%{version}%{bver}.tar.bz2
 Patch0:		%{name}-selinux.patch
 Patch1:		%{name}-no-kernel-headers.patch
 Patch2:		%{name}-strtod.patch
+Patch3:		%{name}-unamep.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/star.html
 BuildRequires:	acl-devel
 BuildRequires:	autoconf
@@ -62,6 +63,7 @@ na dostêp klientem rmt z dowolnego systemu operacyjnego.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # new ac doesn't like comments in the same line as #undef
 %{__perl} -pi -e 's@/\*.*\*/@@g' conf/xconfig.h.in
@@ -88,8 +90,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.linux Changelog TODO
+%attr(755,root,root) %{_bindir}/gnutar
+%attr(755,root,root) %{_bindir}/scpio
 %attr(755,root,root) %{_bindir}/spax
 %attr(755,root,root) %{_bindir}/star
+%attr(755,root,root) %{_bindir}/suntar
 %attr(755,root,root) %{_bindir}/ustar
 %attr(755,root,root) %{_bindir}/smt
 %attr(755,root,root) %{_sbindir}/rmt
