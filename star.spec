@@ -75,6 +75,8 @@ na dostêp klientem rmt z dowolnego systemu operacyjnego.
 
 # new ac doesn't like comments in the same line as #undef
 %{__perl} -pi -e 's@/\*.*\*/@@g' conf/xconfig.h.in
+# kill annoying beep and sleep
+%{__perl} -pi -e 's/^__gmake_warn.*//' RULES/mk-gmake.id
 
 %build
 cd conf
