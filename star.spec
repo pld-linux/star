@@ -2,7 +2,7 @@
 # TODO: use proper CC and CFLAGS
 
 %define ver   1.4
-%define alpha  a25
+%define alpha  a26
 
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
@@ -39,8 +39,8 @@ package implements all Sun/GNU/Schily/BSD enhancements and allows any
 Star jest szybkim, zgodnym z POSIX archiwizerem tar. Potrafi czytaæ i
 zapisywaæ archiwa tar zgodne z POSIX, a tak¿e nie-posiksowe archiwa
 GNU. Star jest pierwsz± wolnodostêpn± implementacj± tara zgodn± z
-norm± POSIX.1-200x. Zapisuje ³±cznie wiele plików na jednej ta¶mie
-lub dysku i mo¿e odtwarzaæ z archiwum pojedyncze pliki.
+norm± POSIX.1-200x. Zapisuje ³±cznie wiele plików na jednej ta¶mie lub
+dysku i mo¿e odtwarzaæ z archiwum pojedyncze pliki.
 
 Ma kolejkê FIFO (dla przyspieszenia operacji), dopasowywanie wzorców,
 obs³ugê archiwów wieloczê¶ciowych, mo¿liwo¶æ archiwizacji plików
