@@ -8,7 +8,7 @@ Name:		star
 Version:	1.5
 %define	bver	a58
 Release:	0.%{bver}.2
-License:	GPL
+License:	CDDL v1.0
 Group:		Applications/File
 Source0:	ftp://ftp.berlios.de/pub/star/alpha/%{name}-%{version}%{bver}.tar.bz2
 # Source0-md5:	b3c367f0cda2a41dd055edff674e104c
@@ -101,7 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.linux Changelog TODO
+%doc AN-%{version}%{bver} CDDL.* Changelog README README.{ACL,largefiles,linux,otherbugs,pax,posix-2001} STARvsGNUTAR STATUS.alpha TODO
 %attr(755,root,root) %{_bindir}/gnutar
 %attr(755,root,root) %{_bindir}/scpio
 %attr(755,root,root) %{_bindir}/spax
