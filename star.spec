@@ -72,6 +72,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/star
 %attr(755,root,root) %{_bindir}/smt
 %attr(755,root,root) %{_sbindir}/rmt
-%doc README.linux ChangeLog TODO
+%doc README.linux Changelog TODO
 %{_mandir}/man1/star.1*
 %{_mandir}/man1/rmt.1*
