@@ -1,6 +1,3 @@
-#
-# TODO: use proper CC and CFLAGS
-
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
@@ -55,7 +52,10 @@ na dostêp klientem rmt z dowolnego systemu operacyjnego.
 %setup -q 
 
 %build
-%{__make} 
+%{__make} \
+	COPTOPT="%{rpmcflags}" \
+	CC='@echo " ==> COMPILING \"$@\""; %{__cc}' \
+	LDCC='@echo " ==> LINKING \"$@\""; %{__cc}'
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -70,6 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/star
+%attr(755,root,root) %{_bindir}/ustar
 %attr(755,root,root) %{_bindir}/smt
 %attr(755,root,root) %{_sbindir}/rmt
 %doc README.linux Changelog TODO
