@@ -7,7 +7,7 @@ Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
 Version:	1.5
 %define	bver	a58
-Release:	0.%{bver}.3
+Release:	0.%{bver}.4
 License:	CDDL v1.0
 Group:		Applications/File
 Source0:	ftp://ftp.berlios.de/pub/star/alpha/%{name}-%{version}%{bver}.tar.bz2
@@ -102,20 +102,5 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AN-%{version}%{bver} CDDL.* Changelog README README.{ACL,largefiles,linux,otherbugs,pax,posix-2001} STARvsGNUTAR STATUS.alpha TODO
-%attr(755,root,root) %{_bindir}/gnutar
-%attr(755,root,root) %{_bindir}/scpio
-%attr(755,root,root) %{_bindir}/spax
-%attr(755,root,root) %{_bindir}/star
-%attr(755,root,root) %{_bindir}/suntar
-%attr(755,root,root) %{_bindir}/ustar
-%attr(755,root,root) %{_bindir}/smt
-%attr(755,root,root) %{_sbindir}/rmt
-%{_mandir}/man1/gnutar.1*
-%{_mandir}/man1/scpio.1*
-%{_mandir}/man1/spax.1*
-%{_mandir}/man1/star.1*
-%{_mandir}/man1/suntar.1*
-%{_mandir}/man1/ustar.1*
-%{_mandir}/man1/smt.1*
-%{_mandir}/man1/rmt.1*
-%{_mandir}/man5/star.5*
+%attr(755,root,root) %{_bindir}/*
+%{_mandir}/man*/*
