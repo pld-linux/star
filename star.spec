@@ -1,4 +1,7 @@
-%bcond_without	selinux	# disable selinux
+#
+# Conditional build:
+%bcond_without	selinux	# disable SELinux support
+#
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
@@ -89,6 +92,8 @@ rm -rf $RPM_BUILD_ROOT
 	INS_BASE=$RPM_BUILD_ROOT%{_prefix} \
 	MANDIR=/share/man
 
+echo '.so star.1' > $RPM_BUILD_ROOT%{_mandir}/man1/ustar.1
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -103,6 +108,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ustar
 %attr(755,root,root) %{_bindir}/smt
 %attr(755,root,root) %{_sbindir}/rmt
-%{_mandir}/man1/*
-%{_mandir}/man3/*
-%{_mandir}/man5/*
+%{_mandir}/man1/gnutar.1*
+%{_mandir}/man1/scpio.1*
+%{_mandir}/man1/spax.1*
+%{_mandir}/man1/star.1*
+%{_mandir}/man1/suntar.1*
+%{_mandir}/man1/ustar.1*
+%{_mandir}/man1/smt.1*
+%{_mandir}/man1/rmt.1*
+%{_mandir}/man5/star.5*
