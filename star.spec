@@ -14,6 +14,7 @@ Patch0:		%{name}-selinux.patch
 Patch1:		%{name}-no-kernel-headers.patch
 Patch2:		%{name}-strtod.patch
 Patch3:		%{name}-unamep.patch
+Patch4:		%{name}-gcc34.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/star.html
 BuildRequires:	acl-devel
 BuildRequires:	autoconf
@@ -66,6 +67,7 @@ na dostêp klientem rmt z dowolnego systemu operacyjnego.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # new ac doesn't like comments in the same line as #undef
 %{__perl} -pi -e 's@/\*.*\*/@@g' conf/xconfig.h.in
