@@ -1,14 +1,21 @@
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
-Version:	1.4.3
-Release:	1
+Version:	1.5
+%define	bver	a37
+Release:	0.%{bver}.1
 License:	GPL
 Group:		Applications/File
-Source0:	ftp://ftp.berlios.de/pub/star/%{name}-%{version}.tar.bz2
-# Source0-md5:	e0760d494c1962d9d784d0c4378d40df
+Source0:	ftp://ftp.berlios.de/pub/star/alpha/%{name}-%{version}%{bver}.tar.bz2
+# Source0-md5:	110ecfad6e61ac5c2397b4eb2f721cd3
+# based on http://www.nsa.gov/selinux/patches/star-selinux.patch.gz
+Patch0:		%{name}-selinux.patch
+Patch1:		%{name}-no-kernel-headers.patch
+Patch2:		%{name}-strtod.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/star.html
 BuildRequires:	acl-devel
+BuildRequires:	autoconf
+BuildRequires:	libselinux-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -52,12 +59,21 @@ na dostêp klientem rmt z dowolnego systemu operacyjnego.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
+# new ac doesn't like comments in the same line as #undef
+%{__perl} -pi -e 's@/\*.*\*/@@g' conf/xconfig.h.in
 
 %build
+cd conf
+%{__autoconf}
+cd ..
 %{__make} \
 	COPTOPT="%{rpmcflags}" \
-	CC='@echo " ==> COMPILING \"$@\""; %{__cc}' \
-	LDCC='@echo " ==> LINKING \"$@\""; %{__cc}'
+	CC="%{__cc}" \
+	LDCC="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -71,10 +87,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc README.linux Changelog TODO
+%attr(755,root,root) %{_bindir}/spax
 %attr(755,root,root) %{_bindir}/star
 %attr(755,root,root) %{_bindir}/ustar
 %attr(755,root,root) %{_bindir}/smt
 %attr(755,root,root) %{_sbindir}/rmt
-%doc README.linux Changelog TODO
 %{_mandir}/man1/star.1*
 %{_mandir}/man1/rmt.1*
+%{_mandir}/man5/star.5*
