@@ -1,13 +1,17 @@
+#
+# TODO: use proper CC and CFLAGS
+
 %define ver   1.4
 %define alpha  a24
 
 Summary:	A very fast, POSIX compliant tape archiver
+Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
 Version:	%{ver}%{alpha}
 Release:	1
-Source0:	ftp://ftp.fokus.gmd.de/pub/unix/star/alpha/%{name}-%{version}.tar.gz
 License:	GPL
-Group:		System Environment/Base
+Group:		Applications/File
+Source0:	ftp://ftp.fokus.gmd.de/pub/unix/star/alpha/%{name}-%{version}.tar.gz
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/star.html
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -31,6 +35,24 @@ that hides Linux incompatibilities. The "rmt" server from the star
 package implements all Sun/GNU/Schily/BSD enhancements and allows any
 "rmt" client from any OS to contact any OS as server.
 
+%description -l pl
+Star jest szybkim, zgodnym z POSIX archiwizerem tar. Potrafi czytaæ i
+zapisywaæ archiwa tar zgodne z POSIX, a tak¿e nie-posiksowe archiwa
+GNU. Star jest pierwsz± wolnodostêpn± implementacj± tara zgodn± z
+norm± POSIX.1-200x. Zapisuje ³±cznie wiele plików na jednej ta¶mie
+lub dysku i mo¿e odtwarzaæ z archiwum pojedyncze pliki.
+
+Ma kolejkê FIFO (dla przyspieszenia operacji), dopasowywanie wzorców,
+obs³ugê archiwów wieloczê¶ciowych, mo¿liwo¶æ archiwizacji plików
+rzadkich, automatyczne wykrywanie formatu archiwów i kolejno¶ci bajtów
+w s³owie, automatyczn± kompresjê i dekompresjê, obs³ugê zdalnych
+archiwów oraz dodatkowe mo¿liwo¶ci umo¿liwiaj±ce wykonywanie pe³nych
+kopii zapasowych. Ten pakiet zawiera narzêdzia getfacl i setfacl
+potrzebne do modyfikacji list kontroli dostêpu (ACL).
+
+Pakiet zawiera te¿ niezale¿ny od platformy serwer rmt, który ma
+zaimplementowane wszystkie rozszerzenia Sun/GNU/Schily/BSD i pozwala
+na dostêp klientem rmt z dowolnego systemu operacyjnego.
 
 %prep
 %setup -q -n %{name}-%{ver}
@@ -40,15 +62,18 @@ package implements all Sun/GNU/Schily/BSD enhancements and allows any
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install INS_BASE=$RPM_BUILD_ROOT/usr MANDIR=%{_mandir}
 
-%files
-%defattr(644,root,root,755)
-%{_bindir}/star
-%{_bindir}/smt
-%{_sbindir}/rmt
-%{_mandir}/man1/star.1
-%{_mandir}/man1/rmt.1
+%{__make} install \
+	INS_BASE=$RPM_BUILD_ROOT%{_prefix} \
+	MANDIR=%{_mandir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/star
+%attr(755,root,root) %{_bindir}/smt
+%attr(755,root,root) %{_sbindir}/rmt
+%{_mandir}/man1/star.1*
+%{_mandir}/man1/rmt.1*
