@@ -6,19 +6,19 @@ Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
 Version:	1.5
-%define	bver	a63
+%define	bver	a67
 Release:	0.%{bver}.1
 License:	CDDL v1.0
 Group:		Applications/File
 Source0:	ftp://ftp.berlios.de/pub/star/alpha/%{name}-%{version}%{bver}.tar.bz2
-# Source0-md5:	c3455faa59c8d3cb6557f54fb4155aee
+# Source0-md5:	98e5bf556e5c3d33498514c76ba486b8
 # based on http://www.nsa.gov/selinux/patches/star-selinux.patch.gz
 Patch0:		%{name}-selinux.patch
 Patch1:		%{name}-no-kernel-headers.patch
 Patch2:		%{name}-strtod.patch
 Patch3:		%{name}-unamep.patch
 Patch4:		%{name}-gcc34.patch
-URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/star.html
+URL:		http://cdrecord.berlios.de/old/private/star.html
 BuildRequires:	acl-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
