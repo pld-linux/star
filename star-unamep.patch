@@ -15,13 +15,13 @@
  K_ARCH=		$(XK_ARCH)
 --- star-1.5/RULES/mk-gmake.id.orig	Sun Dec  6 13:51:19 1998
 +++ star-1.5/RULES/mk-gmake.id	Fri Feb 27 17:31:41 2004
-@@ -40,9 +40,9 @@
+@@ -35,9 +35,9 @@
  _MACHCMD=	(mach || uname -p || true)	2> /dev/null
  _ARCHCMD=	(arch || /usr/ucb/arch || true)	2> /dev/null
  
--XP_ARCH:=	$(shell $(_MACHCMD) | tr '[A-Z]' '[a-z]' | tr ', /\\()"' ',//////' | tr ',/' ',-')
--XK_ARCH:=	$(shell uname -m    | tr '[A-Z]' '[a-z]' | tr ', /\\()"' ',//////' | tr ',/' ',-')
--XM_ARCH:=	$(shell $(_ARCHCMD) | tr '[A-Z]' '[a-z]' | tr ', /\\()"' ',//////' | tr ',/' ',-')
+-XP_ARCH:=	$(shell $(_MACHCMD) | tr '[A-Z]' '[a-z]' | tr ', /\\()"' ',//////' | tr ',/' ',\-')
+-XK_ARCH:=	$(shell uname -m    | tr '[A-Z]' '[a-z]' | tr ', /\\()"' ',//////' | tr ',/' ',\-')
+-XM_ARCH:=	$(shell $(_ARCHCMD) | tr '[A-Z]' '[a-z]' | tr ', /\\()"' ',//////' | tr ',/' ',\-')
 +XP_ARCH:=	$(shell $(_MACHCMD) | tr 'A-Z' 'a-z' | tr ', /\\()"' ',//////' | tr 'x,/' 'x__')
 +XK_ARCH:=	$(shell uname -m    | tr 'A-Z' 'a-z' | tr ', /\\()"' ',//////' | tr 'x,/' 'x__')
 +XM_ARCH:=	$(shell $(_ARCHCMD) | tr 'A-Z' 'a-z' | tr ', /\\()"' ',//////' | tr 'x,/' 'x__')
