@@ -3,7 +3,7 @@
 %bcond_without	selinux	# disable SELinux support
 #
 Summary:	A very fast, POSIX compliant tape archiver
-Summary(pl.UTF-8):   Szybki, zgodny z POSIX program do archiwizacji
+Summary(pl.UTF-8):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
 Version:	1.5
 %define	bver	a70
