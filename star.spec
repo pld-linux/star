@@ -3,7 +3,7 @@
 %bcond_without	selinux	# disable SELinux support
 #
 Summary:	A very fast, POSIX compliant tape archiver
-Summary(pl):	Szybki, zgodny z POSIX program do archiwizacji
+Summary(pl.UTF-8):   Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
 Version:	1.5
 %define	bver	a70
@@ -46,24 +46,24 @@ that hides Linux incompatibilities. The "rmt" server from the star
 package implements all Sun/GNU/Schily/BSD enhancements and allows any
 "rmt" client from any OS to contact any OS as server.
 
-%description -l pl
-Star jest szybkim, zgodnym z POSIX archiwizerem tar. Potrafi czytaæ i
-zapisywaæ archiwa tar zgodne z POSIX, a tak¿e nie-posiksowe archiwa
-GNU. Star jest pierwsz± wolnodostêpn± implementacj± tara zgodn± z
-norm± POSIX.1-200x. Zapisuje ³±cznie wiele plików na jednej ta¶mie lub
-dysku i mo¿e odtwarzaæ z archiwum pojedyncze pliki.
+%description -l pl.UTF-8
+Star jest szybkim, zgodnym z POSIX archiwizerem tar. Potrafi czytaÄ‡ i
+zapisywaÄ‡ archiwa tar zgodne z POSIX, a takÅ¼e nie-posiksowe archiwa
+GNU. Star jest pierwszÄ… wolnodostÄ™pnÄ… implementacjÄ… tara zgodnÄ… z
+normÄ… POSIX.1-200x. Zapisuje Å‚Ä…cznie wiele plikÃ³w na jednej taÅ›mie lub
+dysku i moÅ¼e odtwarzaÄ‡ z archiwum pojedyncze pliki.
 
-Ma kolejkê FIFO (dla przyspieszenia operacji), dopasowywanie wzorców,
-obs³ugê archiwów wieloczê¶ciowych, mo¿liwo¶æ archiwizacji plików
-rzadkich, automatyczne wykrywanie formatu archiwów i kolejno¶ci bajtów
-w s³owie, automatyczn± kompresjê i dekompresjê, obs³ugê zdalnych
-archiwów oraz dodatkowe mo¿liwo¶ci umo¿liwiaj±ce wykonywanie pe³nych
-kopii zapasowych. Ten pakiet zawiera narzêdzia getfacl i setfacl
-potrzebne do modyfikacji list kontroli dostêpu (ACL).
+Ma kolejkÄ™ FIFO (dla przyspieszenia operacji), dopasowywanie wzorcÃ³w,
+obsÅ‚ugÄ™ archiwÃ³w wieloczÄ™Å›ciowych, moÅ¼liwoÅ›Ä‡ archiwizacji plikÃ³w
+rzadkich, automatyczne wykrywanie formatu archiwÃ³w i kolejnoÅ›ci bajtÃ³w
+w sÅ‚owie, automatycznÄ… kompresjÄ™ i dekompresjÄ™, obsÅ‚ugÄ™ zdalnych
+archiwÃ³w oraz dodatkowe moÅ¼liwoÅ›ci umoÅ¼liwiajÄ…ce wykonywanie peÅ‚nych
+kopii zapasowych. Ten pakiet zawiera narzÄ™dzia getfacl i setfacl
+potrzebne do modyfikacji list kontroli dostÄ™pu (ACL).
 
-Pakiet zawiera te¿ niezale¿ny od platformy serwer rmt, który ma
+Pakiet zawiera teÅ¼ niezaleÅ¼ny od platformy serwer rmt, ktÃ³ry ma
 zaimplementowane wszystkie rozszerzenia Sun/GNU/Schily/BSD i pozwala
-na dostêp klientem rmt z dowolnego systemu operacyjnego.
+na dostÄ™p klientem rmt z dowolnego systemu operacyjnego.
 
 %prep
 %setup -q
