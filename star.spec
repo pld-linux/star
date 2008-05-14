@@ -94,6 +94,8 @@ rm -rf $RPM_BUILD_ROOT
 	INS_BASE=$RPM_BUILD_ROOT%{_prefix} \
 	MANDIR=/share/man
 
+mv $RPM_BUILD_ROOT%{_prefix}/etc $RPM_BUILD_ROOT
+
 # unwanted here (command conflict with tar and mt-st)
 rm -f $RPM_BUILD_ROOT%{_bindir}/{mt,tar}
 
@@ -104,8 +106,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AN-%{version} CDDL.* Changelog README READMEs/README.linux STATUS.alpha TODO
-%doc star/README.{ACL,largefiles,otherbugs,pax,posix-2001} star/STARvsGNUTAR
+%doc AN-%{version} CDDL.* Changelog READMEs/README.linux STATUS.alpha TODO
+%doc star/README* star/STARvsGNUTAR
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/default/*
 %attr(755,root,root) %{_bindir}/gnutar
 %attr(755,root,root) %{_bindir}/scpio
 %attr(755,root,root) %{_bindir}/smt
