@@ -6,15 +6,14 @@ Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl.UTF-8):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
 Version:	1.5
-%define	bver	a70
-Release:	0.%{bver}.1
+Release:	1
 License:	CDDL v1.0
 Group:		Applications/File
-Source0:	ftp://ftp.berlios.de/pub/star/alpha/%{name}-%{version}%{bver}.tar.bz2
-# Source0-md5:	fb74ef6bad34d20821c5da7e20f8e18f
+Source0:	ftp://ftp.berlios.de/pub/star/%{name}-%{version}.tar.bz2
+# Source0-md5:	a7b1a5e830935cc1bf1001a558c7f8c4
 # based on http://www.nsa.gov/selinux/patches/star-selinux.patch.gz
 Patch0:		%{name}-selinux.patch
-Patch1:		%{name}-no-kernel-headers.patch
+Patch1:		%{name}-ac26.patch
 Patch2:		%{name}-strtod.patch
 Patch3:		%{name}-unamep.patch
 Patch4:		%{name}-gcc34.patch
@@ -105,13 +104,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AN-%{version}%{bver} CDDL.* Changelog README README.{ACL,largefiles,linux,otherbugs,pax,posix-2001} STARvsGNUTAR STATUS.alpha TODO
+%doc AN-%{version} CDDL.* Changelog README READMEs/README.linux STATUS.alpha TODO
+%doc star/README.{ACL,largefiles,otherbugs,pax,posix-2001} star/STARvsGNUTAR
 %attr(755,root,root) %{_bindir}/gnutar
 %attr(755,root,root) %{_bindir}/scpio
 %attr(755,root,root) %{_bindir}/smt
 %attr(755,root,root) %{_bindir}/spax
 %attr(755,root,root) %{_bindir}/star
-%attr(755,root,root) %{_bindir}/star_fat
 %attr(755,root,root) %{_bindir}/star_sym
 %attr(755,root,root) %{_bindir}/suntar
 %attr(755,root,root) %{_bindir}/tartest
