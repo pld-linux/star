@@ -1,0 +1,42 @@
+diff -ur star-1.5/conf/rules.cnf.in star-1.5-ac/conf/rules.cnf.in
+--- star-1.5/conf/rules.cnf.in	2008-05-14 11:20:38.000000000 +0200
++++ star-1.5-ac/conf/rules.cnf.in	2008-05-14 11:21:46.000000000 +0200
+@@ -1,7 +1,6 @@
+ # @(#)rules.cnf.in	1.17 08/02/20 Copyright 1998-2007 J. Schilling
+ 
+ EXEEXT= @EXEEXT@
+-XEXEEXT= @XEXEEXT@
+ OBJEXT= @OBJEXT@
+ 
+ LARGEFILE_CC_OPT= @largefile_cc_opt@
+diff -ur star-1.5/RULES/rules.cmd star-1.5-ac/RULES/rules.cmd
+--- star-1.5/RULES/rules.cmd	2007-05-06 14:50:26.000000000 +0200
++++ star-1.5-ac/RULES/rules.cmd	2008-05-14 11:23:01.000000000 +0200
+@@ -19,7 +19,6 @@
+ # file and include the License file CDDL.Schily.txt from this distribution.
+ ###########################################################################
+ _EXEEXT=	$(EXEEXT)
+-_XEXEEXT=	$(XEXEEXT)
+ ###########################################################################
+ include		$(SRCROOT)/$(RULESDIR)/rules.obj
+ include		$(SRCROOT)/$(RULESDIR)/rules.dyn
+diff -ur star-1.5/RULES/rules.inc star-1.5-ac/RULES/rules.inc
+--- star-1.5/RULES/rules.inc	2007-05-06 14:50:26.000000000 +0200
++++ star-1.5-ac/RULES/rules.inc	2008-05-14 11:22:39.000000000 +0200
+@@ -19,7 +19,6 @@
+ # file and include the License file CDDL.Schily.txt from this distribution.
+ ###########################################################################
+ _EXEEXT=	$(EXEEXT)
+-_XEXEEXT=	$(XEXEEXT)
+ ###########################################################################
+ include		$(SRCROOT)/$(RULESDIR)/rules.obj
+ ###########################################################################
+@@ -44,7 +43,7 @@
+ 		$(LDCC) $(_LD_OUTPUT_OPTION) $(POFILES) $(LDFLAGS) $(LDLIBS)
+ 
+ $(PTARGET):	$(OINCSDIR) $(PTARGETCX)
+-		@echo "	==> GENERATING include file \"$@\""; $(PTARGETC)$(_XEXEEXT) > $@
++		@echo "	==> GENERATING include file \"$@\""; $(PTARGETC)$(_EXEEXT) > $@
+ 
+ ###########################################################################
+ include		$(SRCROOT)/$(RULESDIR)/sub.htm
