@@ -32,14 +32,14 @@
  CFILES=		star.c header.c cpiohdr.c xheader.c xattr.c \
  		list.c extract.c create.c append.c diff.c restore.c \
 @@ -33,7 +34,7 @@
- 		checkerr.h dumpdate.h bitstring.h
+ 
  #LIBS=		-lunos
  #LIBS=		-lschily -lc /usr/local/lib/gcc-gnulib
--LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET)
-+LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET)
- XMK_FILE=	Makefile.man starformatman.mk scpioman.mk gnutarman.mk \
- 		spaxman.mk suntarman.mk
- 
+-LIBS=		-ldeflt -lrmt -lfind -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET) $(LIB_INTL)
++LIBS=		-ldeflt -lrmt -lfind -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET) $(LIB_INTL)
+ #
+ #	Wenn -lfind, dann auch  $(LIB_INTL)
+ #
 --- star-1.5/star/starsubs.h.selinux	2003-09-10 11:24:04.000000000 -0400
 +++ star-1.5/star/starsubs.h	2003-09-16 15:53:48.000000000 -0400
 @@ -227,6 +227,11 @@
@@ -83,11 +83,11 @@
  CPPOPTS +=	-DPAX
  CFILES=		pax.c header.c cpiohdr.c xheader.c xattr.c \
 @@ -33,7 +34,7 @@
- 		checkerr.h dumpdate.h
- #LIBS=		-lunos
- #LIBS=		-lschily -lc /usr/local/lib/gcc-gnulib
--LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET)
-+LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET)
+ HFILES=		star.h starsubs.h dirtime.h xtab.h xutimes.h \
+ 		movearch.h table.h props.h fifo.h diff.h \
+ 		checkerr.h dumpdate.h bitstring.h
+-LIBS=		-ldeflt -lrmt -lfind -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET) $(LIB_INTL)
++LIBS=		-ldeflt -lrmt -lfind -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET) $(LIB_INTL)
  XMK_FILE=	spaxman.mk
  
  ###########################################################################
@@ -114,15 +114,19 @@
  AC_SUBST(lib_acl_test)
  AC_SUBST(lib_attr)
 +AC_SUBST(lib_selinux)
- 
- AC_OUTPUT(rules.cnf)
+ AC_SUBST(lib_secdb)
+ AC_SUBST(lib_gen)
+ AC_SUBST(lib_pthread)
 --- star-1.5/conf/rules.cnf.in.selinux	2003-09-13 09:06:41.000000000 -0400
 +++ star-1.5/conf/rules.cnf.in	2003-09-16 15:53:48.000000000 -0400
-@@ -8,3 +8,4 @@
+@@ -8,6 +8,7 @@
  LIB_CRYPT= @lib_crypt@
  LIB_ACL= @lib_acl@
  LIB_ATTR = @lib_attr@
 +LIB_SELINUX = @lib_selinux@
+ LIB_SECDB = @lib_secdb@
+ LIB_GEN = @lib_gen@
+ LIB_PTHREAD = @lib_pthread@
 --- star-1.5/star/xattr.c.orig	2004-09-25 14:14:49.000000000 +0200
 +++ star-1.5/star/xattr.c	2004-09-27 15:08:35.928647240 +0200
 @@ -166,6 +166,27 @@
@@ -161,7 +165,7 @@
 +	        if (selinux_enabled && (strcmp(xap->name, "security.selinux") == 0)) 
 +		  continue;
 +#endif
- 		if (setxattr(info->f_name, xap->name, xap->value,
+ 		if (lsetxattr(info->f_name, xap->name, xap->value,
  		    xap->value_len, 0) != 0) {
  			if (!errhidden(E_SETXATTR, info->f_name)) {
 --- star-1.5/star/cpio.mk.orig	2004-09-26 16:06:41.000000000 +0200
@@ -175,11 +179,11 @@
  CFILES=		cpio.c header.c cpiohdr.c xheader.c xattr.c \
  		list.c extract.c create.c append.c diff.c restore.c \
 @@ -33,7 +34,7 @@
+ HFILES=		star.h starsubs.h dirtime.h xtab.h xutimes.h \
+ 		movearch.h table.h props.h fifo.h diff.h \
  		checkerr.h dumpdate.h bitstring.h
- #LIBS=		-lunos
- #LIBS=		-lschily -lc /usr/local/lib/gcc-gnulib
--LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET)
-+LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET)
+-LIBS=		-ldeflt -lrmt -lfind -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET) $(LIB_INTL)
++LIBS=		-ldeflt -lrmt -lfind -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET) $(LIB_INTL)
  XMK_FILE=	scpioman.mk
  
  ###########################################################################
@@ -194,11 +198,11 @@
  CFILES=		gnutar.c header.c cpiohdr.c xheader.c xattr.c \
  		list.c extract.c create.c append.c diff.c restore.c \
 @@ -33,7 +34,7 @@
+ HFILES=		star.h starsubs.h dirtime.h xtab.h xutimes.h \
+ 		movearch.h table.h props.h fifo.h diff.h \
  		checkerr.h dumpdate.h bitstring.h
- #LIBS=		-lunos
- #LIBS=		-lschily -lc /usr/local/lib/gcc-gnulib
--LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET)
-+LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET)
+-LIBS=		-ldeflt -lrmt -lfind -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET) $(LIB_INTL)
++LIBS=		-ldeflt -lrmt -lfind -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET) $(LIB_INTL)
  XMK_FILE=	gnutarman.mk
  
  ###########################################################################
@@ -213,11 +217,11 @@
  CFILES=		suntar.c header.c cpiohdr.c xheader.c xattr.c \
  		list.c extract.c create.c append.c diff.c restore.c \
 @@ -33,7 +34,7 @@
+ HFILES=		star.h starsubs.h dirtime.h xtab.h xutimes.h \
+ 		movearch.h table.h props.h fifo.h diff.h \
  		checkerr.h dumpdate.h bitstring.h
- #LIBS=		-lunos
- #LIBS=		-lschily -lc /usr/local/lib/gcc-gnulib
--LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET)
-+LIBS=		-ldeflt -lrmt -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET)
+-LIBS=		-ldeflt -lrmt -lfind -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SOCKET) $(LIB_INTL)
++LIBS=		-ldeflt -lrmt -lfind -lschily $(LIB_ACL) $(LIB_ATTR) $(LIB_SELINUX) $(LIB_SOCKET) $(LIB_INTL)
  XMK_FILE=	suntarman.mk
  
  ###########################################################################

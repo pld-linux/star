@@ -5,6 +5,6 @@
  #define	STAR_MAIN
  
 +#include <malloc.h>
- #include <mconfig.h>
+ #include <schily/mconfig.h>
  #include <stdio.h>
- #include <stdxlib.h>
+ #include <schily/stdlib.h>
