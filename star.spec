@@ -108,7 +108,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AN-%{version} CDDL.* Changelog READMEs/README.linux STATUS.alpha TODO
 %doc star/README* star/STARvsGNUTAR
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/default/*
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/default/rmt
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/default/star
 %attr(755,root,root) %{_bindir}/gnutar
 %attr(755,root,root) %{_bindir}/scpio
 %attr(755,root,root) %{_bindir}/smt
