@@ -1,0 +1,11 @@
+--- star-1.5/DEFAULTS/Defaults.linux.orig	Sun Feb 16 01:01:48 2003
++++ star-1.5/DEFAULTS/Defaults.linux	Fri Feb 27 16:09:31 2004
+@@ -18,7 +18,7 @@
+ ###########################################################################
+ CWARNOPTS=
+ 
+-DEFINCDIRS=	$(SRCROOT)/include /usr/src/linux/include
++DEFINCDIRS=	$(SRCROOT)/include
+ LDPATH=		-L/opt/schily/lib
+ RUNPATH=	-R $(INS_BASE)/lib -R /opt/schily/lib -R $(OLIBSDIR)
+ 
