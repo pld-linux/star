@@ -6,7 +6,7 @@ Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl.UTF-8):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
 Version:	1.5
-Release:	1
+Release:	2
 License:	CDDL v1.0
 Group:		Applications/File
 Source0:	ftp://ftp.berlios.de/pub/star/%{name}-%{version}.tar.bz2
