@@ -6,7 +6,7 @@ Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl.UTF-8):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
 Version:	1.5
-Release:	2
+Release:	3
 License:	CDDL v1.0
 Group:		Applications/File
 Source0:	ftp://ftp.berlios.de/pub/star/%{name}-%{version}.tar.bz2
@@ -17,6 +17,7 @@ Patch1:		%{name}-ac26.patch
 Patch2:		%{name}-strtod.patch
 Patch3:		%{name}-unamep.patch
 Patch4:		%{name}-gcc34.patch
+Patch5:		%{name}-1.5-glibc-2.10.patch
 URL:		http://cdrecord.berlios.de/old/private/star.html
 BuildRequires:	acl-devel
 BuildRequires:	autoconf
@@ -71,6 +72,7 @@ na dostęp klientem rmt z dowolnego systemu operacyjnego.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # new ac doesn't like comments in the same line as #undef
 %{__perl} -pi -e 's@/\*.*\*/@@g' conf/xconfig.h.in
@@ -90,7 +92,7 @@ cd ..
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -j1 install \
 	INS_BASE=$RPM_BUILD_ROOT%{_prefix} \
 	MANDIR=/share/man
 
