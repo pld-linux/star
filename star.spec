@@ -5,19 +5,16 @@
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl.UTF-8):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
-Version:	1.5
-Release:	3
+Version:	1.5.1
+Release:	0.1
 License:	CDDL v1.0
 Group:		Applications/File
 Source0:	ftp://ftp.berlios.de/pub/star/%{name}-%{version}.tar.bz2
-# Source0-md5:	a7b1a5e830935cc1bf1001a558c7f8c4
+# Source0-md5:	f9a28f83702624c4c08ef1a343014c7a
 # based on http://www.nsa.gov/selinux/patches/star-selinux.patch.gz
 Patch0:		%{name}-selinux.patch
 Patch1:		%{name}-ac26.patch
 Patch2:		%{name}-strtod.patch
-Patch3:		%{name}-unamep.patch
-Patch4:		%{name}-gcc34.patch
-Patch5:		%{name}-1.5-glibc-2.10.patch
 URL:		http://cdrecord.berlios.de/old/private/star.html
 BuildRequires:	acl-devel
 BuildRequires:	autoconf
@@ -70,19 +67,15 @@ na dostęp klientem rmt z dowolnego systemu operacyjnego.
 %{?with_selinux:%patch0 -p1}
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 # new ac doesn't like comments in the same line as #undef
-%{__perl} -pi -e 's@/\*.*\*/@@g' conf/xconfig.h.in
+%{__perl} -pi -e 's@/\*.*\*/@@g' autoconf/xconfig.h.in
 # kill annoying beep and sleep
 %{__perl} -pi -e 's/^__gmake_warn.*//' RULES/mk-gmake.id
 
 %build
-cd conf
-cp -f /usr/share/automake/config.* .
-%{__autoconf}
+cd autoconf
+./autoconf
 cd ..
 %{__make} \
 	COPTOPT="%{rpmcflags}" \
@@ -91,15 +84,21 @@ cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/default
 
 %{__make} -j1 install \
 	INS_BASE=$RPM_BUILD_ROOT%{_prefix} \
 	MANDIR=/share/man
 
-mv $RPM_BUILD_ROOT%{_prefix}/etc $RPM_BUILD_ROOT
+install rmt/rmt.dfl $RPM_BUILD_ROOT%{_sysconfdir}/default/rmt
+install star/star.dfl $RPM_BUILD_ROOT%{_sysconfdir}/default/star
 
 # unwanted here (command conflict with tar and mt-st)
-rm -f $RPM_BUILD_ROOT%{_bindir}/{mt,tar}
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/{mt,tar}
+
+# cleanup unpackaged stuff
+%{__rm} -r $RPM_BUILD_ROOT{%{_includedir},%{_prefix}/lib,%{_datadir}/doc}
+%{__rm} -r $RPM_BUILD_ROOT%{_mandir}/{man1/match.1*,man3,man5/make*.5*}
 
 echo '.so star.1' > $RPM_BUILD_ROOT%{_mandir}/man1/ustar.1
 

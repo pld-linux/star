@@ -91,8 +91,8 @@
  XMK_FILE=	spaxman.mk
  
  ###########################################################################
---- star-1.5/conf/configure.in.selinux	2003-09-13 12:50:23.000000000 -0400
-+++ star-1.5/conf/configure.in	2003-09-16 15:53:48.000000000 -0400
+--- star-1.5/autoconf/configure.in.selinux	2003-09-13 12:50:23.000000000 -0400
++++ star-1.5/autoconf/configure.in	2003-09-16 15:53:48.000000000 -0400
 @@ -313,6 +313,15 @@
    LIBS="$ac_save_LIBS"
  fi
@@ -117,8 +117,8 @@
  AC_SUBST(lib_secdb)
  AC_SUBST(lib_gen)
  AC_SUBST(lib_pthread)
---- star-1.5/conf/rules.cnf.in.selinux	2003-09-13 09:06:41.000000000 -0400
-+++ star-1.5/conf/rules.cnf.in	2003-09-16 15:53:48.000000000 -0400
+--- star-1.5/autoconf/rules.cnf.in.selinux	2003-09-13 09:06:41.000000000 -0400
++++ star-1.5/autoconf/rules.cnf.in	2003-09-16 15:53:48.000000000 -0400
 @@ -8,6 +8,7 @@
  LIB_CRYPT= @lib_crypt@
  LIB_ACL= @lib_acl@
