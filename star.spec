@@ -6,7 +6,7 @@ Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl.UTF-8):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
 Version:	1.5.1
-Release:	1
+Release:	2
 License:	CDDL v1.0
 Group:		Applications/File
 Source0:	ftp://ftp.berlios.de/pub/star/%{name}-%{version}.tar.bz2
@@ -98,7 +98,7 @@ install star/star.dfl $RPM_BUILD_ROOT%{_sysconfdir}/default/star
 
 # cleanup unpackaged stuff
 %{__rm} -r $RPM_BUILD_ROOT{%{_includedir},%{_prefix}/lib,%{_datadir}/doc}
-%{__rm} -r $RPM_BUILD_ROOT%{_mandir}/{man1/match.1*,man3,man5/make*.5*}
+%{__rm} -r $RPM_BUILD_ROOT%{_mandir}/{man3,man5/make*.5*}
 
 echo '.so star.1' > $RPM_BUILD_ROOT%{_mandir}/man1/ustar.1
 
@@ -122,6 +122,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ustar
 %attr(755,root,root) %{_sbindir}/rmt
 %{_mandir}/man1/gnutar.1*
+%{_mandir}/man1/match.1*
 %{_mandir}/man1/scpio.1*
 %{_mandir}/man1/spax.1*
 %{_mandir}/man1/star.1*
