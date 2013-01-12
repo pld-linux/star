@@ -20,9 +20,8 @@ diff -ur star-1.5/RULES/rules.cmd star-1.5-ac/RULES/rules.cmd
  ###########################################################################
  include		$(SRCROOT)/$(RULESDIR)/rules.obj
  include		$(SRCROOT)/$(RULESDIR)/rules.dyn
-diff -ur star-1.5/RULES/rules.inc star-1.5-ac/RULES/rules.inc
---- star-1.5/RULES/rules.inc	2007-05-06 14:50:26.000000000 +0200
-+++ star-1.5-ac/RULES/rules.inc	2008-05-14 11:22:39.000000000 +0200
+--- star-1.5.2/RULES/rules.inc.orig	2011-07-16 17:02:16.000000000 +0200
++++ star-1.5.2/RULES/rules.inc	2013-01-12 15:06:31.957140996 +0100
 @@ -19,7 +19,6 @@
  # file and include the License file CDDL.Schily.txt from this distribution.
  ###########################################################################
@@ -31,12 +30,14 @@ diff -ur star-1.5/RULES/rules.inc star-1.5-ac/RULES/rules.inc
  ###########################################################################
  include		$(SRCROOT)/$(RULESDIR)/rules.obj
  ###########################################################################
-@@ -44,7 +43,7 @@
- 		$(LDCC) $(_LD_OUTPUT_OPTION) $(POFILES) $(LDFLAGS) $(LDLIBS)
- 
+@@ -48,8 +47,8 @@
+ #
  $(PTARGET):	$(OINCSDIR) $(PTARGETCX)
--		@echo "	==> GENERATING include file \"$@\""; $(PTARGETC)$(_XEXEEXT) > $@
-+		@echo "	==> GENERATING include file \"$@\""; $(PTARGETC)$(_EXEEXT) > $@
+ 		@echo "	==> GENERATING include file \"$@\""; \
+-		$(PTARGETC)$(_XEXEEXT) > $@ || \
+-		$(CONFIG_RMTCALL) $(PTARGETC)$(_XEXEEXT) > $@
++		$(PTARGETC)$(_EXEEXT) > $@ || \
++		$(CONFIG_RMTCALL) $(PTARGETC)$(_EXEEXT) > $@
  
  ###########################################################################
  include		$(SRCROOT)/$(RULESDIR)/sub.htm

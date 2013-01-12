@@ -5,12 +5,12 @@
 Summary:	A very fast, POSIX compliant tape archiver
 Summary(pl.UTF-8):	Szybki, zgodny z POSIX program do archiwizacji
 Name:		star
-Version:	1.5.1
-Release:	2
+Version:	1.5.2
+Release:	1
 License:	CDDL v1.0
 Group:		Applications/File
 Source0:	ftp://ftp.berlios.de/pub/star/%{name}-%{version}.tar.bz2
-# Source0-md5:	f9a28f83702624c4c08ef1a343014c7a
+# Source0-md5:	5c15cedb52e26b02b95c82de08c5fcc1
 # based on http://www.nsa.gov/selinux/patches/star-selinux.patch.gz
 Patch0:		%{name}-selinux.patch
 Patch1:		%{name}-ac26.patch
@@ -87,14 +87,14 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/default
 
 %{__make} -j1 install \
-	INS_BASE=$RPM_BUILD_ROOT%{_prefix} \
-	MANDIR=/share/man
+	INS_BASE=$RPM_BUILD_ROOT%{_prefix}
 
 install rmt/rmt.dfl $RPM_BUILD_ROOT%{_sysconfdir}/default/rmt
 install star/star.dfl $RPM_BUILD_ROOT%{_sysconfdir}/default/star
 
 # unwanted here (command conflict with tar and mt-st)
 %{__rm} $RPM_BUILD_ROOT%{_bindir}/{mt,tar}
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/mt.1
 
 # cleanup unpackaged stuff
 %{__rm} -r $RPM_BUILD_ROOT{%{_includedir},%{_prefix}/lib,%{_datadir}/doc}
