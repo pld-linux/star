@@ -79,6 +79,7 @@ cd autoconf
 cd ..
 %{__make} \
 	COPTOPT="%{rpmcflags}" \
+	COPTGPROF="" \
 	CC="%{__cc}" \
 	LDCC="%{__cc}"
 
@@ -87,7 +88,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/default
 
 %{__make} -j1 install \
-	INS_BASE=$RPM_BUILD_ROOT%{_prefix}
+	INS_BASE=$RPM_BUILD_ROOT%{_prefix} \
+	INS_RBASE=$RPM_BUILD_ROOT
 
 install rmt/rmt.dfl $RPM_BUILD_ROOT%{_sysconfdir}/default/rmt
 install star/star.dfl $RPM_BUILD_ROOT%{_sysconfdir}/default/star
