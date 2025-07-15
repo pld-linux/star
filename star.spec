@@ -65,8 +65,8 @@ na dostęp klientem rmt z dowolnego systemu operacyjnego.
 %prep
 %setup -q
 %{?with_selinux:%patch0 -p1}
-%patch1 -p1
-%patch2 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 
 # new ac doesn't like comments in the same line as #undef
 %{__perl} -pi -e 's@/\*.*\*/@@g' autoconf/xconfig.h.in
